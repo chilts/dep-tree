@@ -19,7 +19,7 @@ Let's now add a few more patches which depend on 'release-1' : 'create-item-tabl
 
 Finally, 'release-2' depends on both 'create-item-table' and 'update-user-table'.
 
-```
+```javascript
 var DepTree = require('dep-tree').
 var tree = new DepTree();
 
@@ -50,7 +50,7 @@ this way but it probably makes it more manageable.
 
 ### Simple ###
 
-```
+```javascript
 tree.add('grandparent', 'parent');
 tree.solve('grandparent'); // [ 'grandparent' ]
 tree.solve('parent'); // [ 'grandparent', 'parent' ]
@@ -58,7 +58,7 @@ tree.solve('parent'); // [ 'grandparent', 'parent' ]
 
 ### Multi ###
 
-```
+```javascript
 tree.add('grandparent', 'parent1');
 tree.add('grandparent', 'parent2');
 tree.add('parent1', 'child');
