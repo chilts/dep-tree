@@ -1,5 +1,9 @@
 # dep-tree #
 
+Create and solve a dependency tree. [![Build Status](https://travis-ci.org/chilts/dep-tree.png?branch=master)](https://travis-ci.org/chilts/dep-tree)
+
+[![NPM](https://nodei.co/npm/dep-tree.png?downloads=true)](https://nodei.co/npm/dep-tree/)
+
 Allows you to create a tree and resolve the parents of any child. Each child can have multiple parents.
 
 Note: no checking is done to stop adding cyclic dependencies. That is up to you.
