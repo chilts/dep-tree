@@ -43,6 +43,29 @@ tree.solve('release-2');
 This example shows a tree which widens between releases and comes together for each release. You don't have to do it
 this way but it probably makes it more manageable.
 
+## Examples ##
+
+### Simple ###
+
+```
+tree.add('grandparent', 'parent');
+tree.solve('grandparent'); // [ 'grandparent' ]
+tree.solve('parent'); // [ 'grandparent', 'parent' ]
+```
+
+### Multi ###
+
+```
+tree.add('grandparent', 'parent1');
+tree.add('grandparent', 'parent2');
+tree.add('child', 'parent1');
+tree.add('child', 'parent2');
+tree.solve('grandparent'); // [ 'grandparent' ]
+tree.solve('parent1');     // [ 'grandparent', 'parent1' ]
+tree.solve('parent2');     // [ 'grandparent', 'parent2' ]
+tree.solve('child');       // [ 'grandparent', 'parent1', 'parent2', 'child' ]
+```
+
 # Author #
 
 Written by [Andrew Chilton](http://chilts.org/) - [Blog](http://chilts.org/blog/) -
