@@ -61,8 +61,8 @@ tree.solve('parent'); // [ 'grandparent', 'parent' ]
 ```
 tree.add('grandparent', 'parent1');
 tree.add('grandparent', 'parent2');
-tree.add('child', 'parent1');
-tree.add('child', 'parent2');
+tree.add('parent1', 'child');
+tree.add('parent2', 'child');
 tree.solve('grandparent'); // [ 'grandparent' ]
 tree.solve('parent1');     // [ 'grandparent', 'parent1' ]
 tree.solve('parent2');     // [ 'grandparent', 'parent2' ]
