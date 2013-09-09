@@ -2,19 +2,10 @@ var _ = require('underscore');
 
 function DepTree() {
     this.parentsOf = {};
-    this.childrenOf  = {};
 }
 
 DepTree.prototype.add = function(parent, child) {
     var self = this;
-
-    // add the children of the parent
-    if ( self.childrenOf[parent] ) {
-        self.childrenOf[parent].push(child);
-    }
-    else {
-        self.childrenOf[parent] = [ child ];
-    }
 
     // add the parent of the child
     if ( self.parentsOf[child] ) {
