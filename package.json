@@ -1,0 +1,13 @@
+{
+    "name" : "dep-tree",
+    "version" : "0.1.0",
+    "description" : "Create and solve a dependency tree.",
+
+    "repository" : {
+        
+    },
+
+    "scripts" : {
+        "test" : "set -e; for FILE in test/*.js; do node $FILE; done"
+    }
+}
