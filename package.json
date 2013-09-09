@@ -3,11 +3,38 @@
     "version" : "0.1.0",
     "description" : "Create and solve a dependency tree.",
 
+    "main" : "dep-tree.js",
+    "devDependencies" : {
+        "tape" : "*"
+    },
+    "dependencies" : {
+        "underscore" : "1.5.x"
+    },
+
+    "homepage" : "https://github.com/chilts/dep-tree/",
     "repository" : {
-        
+        "type" : "git",
+        "url" : "git://github.com/chilts/dep-tree.git"
+    },
+    "bugs" : {
+        "url" : "http://github.com/chilts/dep-tree/issues",
+        "mail" : "andychilton@gmail.com"
     },
 
     "scripts" : {
-        "test" : "set -e; for FILE in test/*.js; do node $FILE; done"
-    }
+        "test" : "set -e; for FILE in test/*.js; do echo --- $FILE ---; node $FILE; done"
+    },
+
+    "author" : {
+        "name" : "Andrew Chilton",
+        "email" : "andychilton@gmail.com",
+        "url" : "http://chilts.org/"
+    },
+    "licenses" : [{
+        "type" : "MIT",
+        "url" : "http://chilts.mit-license.org/2013/"
+    }],
+    "keywords" : [
+        "tree", "dependency"
+    ]
 }

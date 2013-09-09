@@ -28,7 +28,7 @@ tree.add('create-database', 'create-user-table');
 tree.add('create-user-table', 'release-1');
 
 // -> [ 'create-database', 'create-user-table', 'release-1' ]
-tree.resolve('release-1');
+tree.solve('release-1');
 
 // patches for release-2
 tree.add('release-1', 'create-item-table');
@@ -37,7 +37,7 @@ tree.add('create-item-table', 'release-2');
 tree.add('update-user-table', 'release-2');
 
 // -> [ 'create-database', 'create-user-table', 'release-1', 'create-item-table', 'update-user-table', 'release-2' ]
-tree.resolve('release-2');
+tree.solve('release-2');
 ```
 
 This example shows a tree which widens between releases and comes together for each release. You don't have to do it

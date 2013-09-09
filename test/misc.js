@@ -10,7 +10,7 @@ test(function(t) {
     tree.add('20130901-user-table', '20130905-release');
     tree.add('20130902-item-table', '20130905-release');
     t.deepEqual(
-        tree.ancestors('20130905-release'),
+        tree.solve('20130905-release'),
         ['20130830-property-table', '20130901-user-table', '20130902-item-table', '20130905-release'],
         'First release has everything in it'
     );
@@ -30,7 +30,7 @@ test(function(t) {
 
     // we know these parent/child relationships are sortable, so let's compare them
     t.deepEqual(
-        tree.ancestors('20130909-release').sort(),
+        tree.solve('20130909-release').sort(),
         [
             '20130830-property-table',
             '20130901-user-table',

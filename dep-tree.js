@@ -25,7 +25,7 @@ DepTree.prototype.add = function(parent, child) {
     }
 };
 
-DepTree.prototype.ancestors = function(child) {
+DepTree.prototype.solve = function(child) {
     var self = this;
     var parents = [];
 
@@ -39,7 +39,7 @@ DepTree.prototype.ancestors = function(child) {
     // loop through all of the parents of this child (backwards to keep order) and add them on
     self.parentsOf[child].reverse().forEach(function(parent) {
         parents.unshift(parent);
-        parents.unshift(self.ancestors(parent));
+        parents.unshift(self.solve(parent));
     });
 
     parents = _.flatten(parents);
