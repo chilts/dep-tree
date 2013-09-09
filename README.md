@@ -36,7 +36,10 @@ tree.add('release-1', 'update-user-table');
 tree.add('create-item-table', 'release-2');
 tree.add('update-user-table', 'release-2');
 
-// -> [ 'create-database', 'create-user-table', 'release-1', 'create-item-table', 'update-user-table', 'release-2' ]
+// [
+//     'create-database', 'create-user-table', 'release-1',
+//     'create-item-table', 'update-user-table', 'release-2'
+// ]
 tree.solve('release-2');
 ```
 
