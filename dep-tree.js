@@ -1,4 +1,17 @@
+// ----------------------------------------------------------------------------
+//
+// dep-tree.js - Create and solve a dependency tree.
+//
+// Copyright 2013 Andrew Chilton.  All rights reserved.
+//
+// License: MIT
+//
+// ----------------------------------------------------------------------------
+
+// npm
 var _ = require('underscore');
+
+// ----------------------------------------------------------------------------
 
 function DepTree() {
     this.parentsOf = {};
@@ -34,4 +47,8 @@ DepTree.prototype.solve = function(child) {
     return _.chain(parents).flatten().uniq().value()
 };
 
+// ----------------------------------------------------------------------------
+
 module.exports = DepTree;
+
+// ----------------------------------------------------------------------------
