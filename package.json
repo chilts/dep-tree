@@ -30,10 +30,7 @@
         "email" : "andychilton@gmail.com",
         "url" : "http://chilts.org/"
     },
-    "licenses" : [{
-        "type" : "MIT",
-        "url" : "http://chilts.mit-license.org/2013/"
-    }],
+    "license" : "MIT",
     "keywords" : [
         "tree", "dependency"
     ]
