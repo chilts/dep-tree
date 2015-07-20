@@ -47,21 +47,27 @@ DepTree.prototype.solve = function(child) {
     return _.chain(parents).flatten().uniq().value()
 };
 
-DepTree.prototype.reduce = function(nodeId, reducerFn) {
-    return reduce({}, this, reducerFn, nodeId);
-}
+DepTree.prototype.reduce = function(nodeId, reducerFn, cache) {
+    return reduce(cache || {}, this, reducerFn, nodeId);
+};
 
 function reduce (cache, tree, reducerFn, nodeId) {
+    if (cache[nodeId] !== undefined) return cache[nodeId]
+
     var parents = _.chain( tree.parentsOf[nodeId] || [] )
         .map(function(parentId) {
             // Get reduction of each parent
-            cache[parentId] = cache[parentId] || reduce(cache, tree, reducerFn, parentId)
-            return cache[parentId]
+            if (cache[parentId] === undefined) {
+                cache[parentId] = reduce(cache, tree, reducerFn, parentId);
+            }
+            return cache[parentId];
         })
         .compact()
         .value()
     ;
-    return reducerFn(nodeId, parents);
+    var result = reducerFn(nodeId, parents);
+    cache[nodeId] = result;
+    return result;
 }
 
 // ----------------------------------------------------------------------------

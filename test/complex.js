@@ -22,6 +22,7 @@ test(function(t) {
     t.deepEqual(tree.solve('parent2'), [ 'grandparent', 'parent2' ], '2) One Generation');
     t.deepEqual(tree.solve('me'), [ 'grandparent', 'parent1', 'parent2', 'me' ], 'Two Generations');
 
+    // Reduce two generations
     var visitCounts = {};
     var result = tree.reduce('me', function(child, parents) {
         visitCounts[child] || (visitCounts[child] = 0);
@@ -35,6 +36,28 @@ test(function(t) {
     for (var node in visitCounts) {
         t.equal(visitCounts[node], 1, node + " should only be reduced once");
     }
+
+
+    // Reusing a cache should not incur multiple calls
+    var tree2 = new DepTree();
+    tree2.add('schools', 'groups');
+    tree2.add('groups', 'memberships');
+    tree2.add('users', 'memberships');
+
+    var visitCounts = {};
+    var explicitCache = {};
+    ['groups', 'memberships', 'users', 'schools'].forEach(function(node) {
+
+        var result = tree2.reduce(node, function(child, parents) {
+            visitCounts[child] || (visitCounts[child] = 0);
+            visitCounts[child] += 1;
+            return true;
+        }, explicitCache);
+    });
+
+    ['groups', 'memberships', 'users', 'schools'].forEach(function(node) {
+        t.equal(visitCounts[node], 1, node + " should only be reduced once");
+    });
 
 
     t.end();

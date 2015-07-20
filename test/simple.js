@@ -30,6 +30,12 @@ test(function(t) {
     });
     t.equal(result, 'me,parent,grandparent');
 
+    // Reduce with cache
+    var result = tree.reduce('me', function(child, parents) {
+        throw new Error("I should not run.")
+    }, { 'me': 'abc' })
+    t.equal(result, 'abc')
+
 
     // Reducing on a non-existant key should work just fine
     var result = tree.reduce('idontexist', function(child, parents) {
