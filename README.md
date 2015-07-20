@@ -67,10 +67,25 @@ tree.add('grandparent', 'parent1');
 tree.add('grandparent', 'parent2');
 tree.add('parent1', 'child');
 tree.add('parent2', 'child');
+
 tree.solve('grandparent'); // [ 'grandparent' ]
 tree.solve('parent1');     // [ 'grandparent', 'parent1' ]
 tree.solve('parent2');     // [ 'grandparent', 'parent2' ]
 tree.solve('child');       // [ 'grandparent', 'parent1', 'parent2', 'child' ]
+```
+
+### Reducing ###
+
+Once you build your dependency tree, you can reduce it in any manner you choose.
+
+Extending the above example:
+
+```javascript
+var result = tree.reduce('child', function(child, parents) {
+    return '{ ' + child + ' -> ' + parents.join(', ') + ' }';
+});
+
+result //=> "{ child -> { parent2 -> { grandparent ->  } }, { parent1 -> { grandparent ->  } } }"
 ```
 
 # Author #
