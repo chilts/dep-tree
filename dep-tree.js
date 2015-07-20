@@ -47,6 +47,23 @@ DepTree.prototype.solve = function(child) {
     return _.chain(parents).flatten().uniq().value()
 };
 
+DepTree.prototype.reduce = function(nodeId, reducerFn) {
+    return reduce({}, this, reducerFn, nodeId);
+}
+
+function reduce (cache, tree, reducerFn, nodeId) {
+    var parents = _.chain( tree.parentsOf[nodeId] || [] )
+        .map(function(parentId) {
+            // Get reduction of each parent
+            cache[parentId] = cache[parentId] || reduce(cache, tree, reducerFn, parentId)
+            return cache[parentId]
+        })
+        .compact()
+        .value()
+    ;
+    return reducerFn(nodeId, parents);
+}
+
 // ----------------------------------------------------------------------------
 
 module.exports = DepTree;

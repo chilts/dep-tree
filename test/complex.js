@@ -22,5 +22,20 @@ test(function(t) {
     t.deepEqual(tree.solve('parent2'), [ 'grandparent', 'parent2' ], '2) One Generation');
     t.deepEqual(tree.solve('me'), [ 'grandparent', 'parent1', 'parent2', 'me' ], 'Two Generations');
 
+    var visitCounts = {};
+    var result = tree.reduce('me', function(child, parents) {
+        visitCounts[child] || (visitCounts[child] = 0);
+        visitCounts[child] += 1;
+        return [child].concat(parents).join(',');
+    });
+    var option1 = 'me,parent2,grandparent,parent1,grandparent';
+    var option2 = 'me,parent1,grandparent,parent2,grandparent';
+    t.assert(result === option1 || result === option2, "All dependencies reduce.");
+
+    for (var node in visitCounts) {
+        t.equal(visitCounts[node], 1, node + " should only be reduced once");
+    }
+
+
     t.end();
 });
