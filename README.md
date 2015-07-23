@@ -24,7 +24,7 @@ Let's now add a few more patches which depend on 'release-1' : 'create-item-tabl
 Finally, 'release-2' depends on both 'create-item-table' and 'update-user-table'.
 
 ```javascript
-var DepTree = require('dep-tree').
+var DepTree = require('dep-tree');
 var tree = new DepTree();
 
 // patches for release-1
@@ -67,16 +67,92 @@ tree.add('grandparent', 'parent1');
 tree.add('grandparent', 'parent2');
 tree.add('parent1', 'child');
 tree.add('parent2', 'child');
+
 tree.solve('grandparent'); // [ 'grandparent' ]
 tree.solve('parent1');     // [ 'grandparent', 'parent1' ]
 tree.solve('parent2');     // [ 'grandparent', 'parent2' ]
 tree.solve('child');       // [ 'grandparent', 'parent1', 'parent2', 'child' ]
 ```
 
+### Reducing ###
+
+Once you build your dependency tree, you can reduce it in any manner you choose.
+
+Extending the above example:
+
+```javascript
+var result = tree.reduce('child', function(child, parents) {
+    return '{ ' + child + ' -> ' + parents.join(', ') + ' }';
+});
+
+result //=> "{ child -> { parent2 -> { grandparent ->  } }, { parent1 -> { grandparent ->  } } }"
+```
+
+The result of each node is cached, so each node will be executed no more than once for each call to `tree.reduce`.
+
+You can also give the reduce function an explicit cache object to maintain cached values across multiple reduce calls:
+
+```javascript
+var DepTree = require('dep-tree');
+var tree = new DepTree();
+
+tree.add('parent', 'son');
+tree.add('parent', 'daughter');
+
+// Define cache for multiple use
+var cache = {}
+
+// Helper functions
+function add (x,y) { return x + y }
+function sum (array) { return array.reduce(add) }
+
+// //
+//
+// This is our reduce function.
+// When we reduce on a specific node, dep-tree will call reduce
+// on that node and its dependencies (in other words, the node's parents).
+//
+// A node's dependencies get reduced before the node itself.
+//
+//
+function sumLengths (node, parents) {
+  console.log("Reducing:", node);
+  return node.length + sum(parents);
+}
+
+tree.reduce('son', sumLengths, cache); // <--- Provide cache as third parameter
+// Console logs:
+//   Reducing: parent
+//   Reducing: son
+// Returns:
+//=> 9
+
+console.log('Cache (1):', cache);
+// Console logs:
+//   Cache(1): { parent: 6, son: 9 }
+
+
+tree.reduce('daughter', sumLengths, cache); // <--- Provide same cache as before
+// Console logs:
+//   Reducing: daughter
+// Returns:
+//=> 17
+
+console.log('Cache (2):', cache);
+// Console logs:
+//   Cache(2): { parent: 6, son: 9, daughter: 17 }
+
+
+tree.reduce('parent', sumLengths, cache);
+// Console logs: nothing!
+// Returns:
+//=> 6
+```
+
 # Author #
 
 Written by [Andrew Chilton](http://chilts.org/) - [Blog](http://chilts.org/blog/) -
-[Twitter](https://twitter.com/andychilton).
+[Twitter](https://twitter.com/andychilton);
 
 # License #
 
